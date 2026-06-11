@@ -1,41 +1,51 @@
-FROM alpine:3 AS builder
+# ---------- Stage 1: Builder ----------
+FROM alpine:3.24 AS builder
 
-# Install build-time dependencies (compilers, headers, dev tools)
-RUN apk add --no-cache \
-    python3-dev \
-    py3-pip \
-    qt5-qtbase-dev \
-    qt5-qtsvg-dev \
-    py3-pyside6 \
-    cups-dev \
-    libxml2-dev \
-    libxslt-dev \
-    build-base
-
-# Install Inkcut into a specific directory (e.g., /opt/inkcut) or global
-# Using a virtual environment is recommended for easier copying
-RUN python3 -m venv /opt/inkcut-env
-ENV PATH="/opt/inkcut-env/bin:$PATH"
-RUN pip install --no-cache-dir inkcut
-
-# Start a fresh stage for the final image
-FROM alpine:3
-
-# Install ONLY runtime dependencies (no compilers or -dev packages)
+# Install runtime + build dependencies
+# py3-lxml satisfies the lxml requirement, so pip won't try to compile it.
+# qt5-qtbase-dev is still needed if enaml requires compilation against Qt headers.
 RUN apk add --no-cache \
     python3 \
+    py3-pip \
+    py3-pycups \
+    py3-lxml \
+    py3-qt5 \
+    qt5-qtbase-dev \
+    build-base \
+    cups-dev
+
+# Install Inkcut from PyPI
+# --break-system-packages is required for Alpine 3.19+
+RUN pip3 install --no-cache-dir --break-system-packages inkcut
+
+# ---------- Stage 2: Runtime ----------
+FROM alpine:3.24
+
+# Install runtime dependencies
+# Include py3-lxml here too, as it was used in builder
+RUN apk add --no-cache \
+    python3 \
+    py3-pycups \
+    py3-qt5 \
+    py3-lxml \
+    cups-libs \
     qt5-qtbase \
     qt5-qtsvg \
-    py3-pyside6 \
-    cups-libs \
-    libxml2 \
-    libxslt
+    qt5-qtdeclarative \
+    qt5-qtserialport
 
-# Copy the virtual environment from the builder stage
-COPY --from=builder /opt/inkcut-env /opt/inkcut-env
+WORKDIR /app
 
-# Set the path to use the copied environment
-ENV PATH="/opt/inkcut-env/bin:$PATH"
+# Copy Python site-packages from builder
+# Includes inkcut, enaml, pyqtgraph, and any pure-python deps
+COPY --from=builder /usr/lib/python3.14/site-packages /usr/lib/python3.14/site-packages
 
-# Set the entrypoint
-ENTRYPOINT ["inkcut"]
+# Copy executable scripts (inkcut)
+COPY --from=builder /usr/bin/inkcut /usr/bin/inkcut
+
+# Ensure the script is executable
+RUN chmod +x /usr/bin/inkcut
+
+ENV PATH="/usr/bin:$PATH"
+
+CMD ["inkcut"]
