@@ -4,3 +4,14 @@ Multistage docker setup that builds inkcut then creates a trimmed-down image (no
 ```
 ghcr.io/cyril279/docker-inkcut:latest
 ```
+
+### inkcut.ini
+```ini
+# untested 2026/06/11
+[inkcut]
+name=inkcut
+image=ghcr.io/cyril279/docker-inkcut:latest
+exported_apps="inkcut"
+pull=true
+replace=true
+```
