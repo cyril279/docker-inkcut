@@ -9,8 +9,8 @@ RUN apk add --no-cache \
     py3-pip \
     py3-pycups \
     py3-lxml \
-    py3-qt5 \
-    qt5-qtbase-dev \
+    py3-qt6 \
+    qt6-qtbase-dev \
     build-base \
     cups-dev
 
@@ -26,13 +26,13 @@ FROM alpine:3.24
 RUN apk add --no-cache \
     python3 \
     py3-pycups \
-    py3-qt5 \
+    py3-qt6 \
     py3-lxml \
     cups-libs \
-    qt5-qtbase \
-    qt5-qtsvg \
-    qt5-qtdeclarative \
-    qt5-qtserialport
+    qt6-qtbase \
+    qt6-qtsvg \
+    qt6-qtdeclarative \
+    qt6-qtserialport
 
 WORKDIR /app
 
