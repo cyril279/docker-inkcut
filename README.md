@@ -16,10 +16,7 @@ The distrobox command downloads that container image then makes inkcut convenien
 ghcr.io/cyril279/docker-inkcut:latest
 ```
 
-### distrobox/distroshelf:
-The easiest
-
-[distrobox.ini:](distrobox.ini)  
+# [distrobox.ini:](distrobox.ini)  
 ```ini
 [inkcutEnv]
 name=inkcutEnv
