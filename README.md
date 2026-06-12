@@ -7,7 +7,7 @@ ghcr.io/cyril279/docker-inkcut:latest
 
 ### inkcut.ini
 
-[inkcut raw url](https://raw.githubusercontent.com/cyril279/docker-inkcut/refs/heads/main/README.m)
+[inkcut raw url](https://raw.githubusercontent.com/cyril279/docker-inkcut/refs/heads/main/inkcut.ini)
 [inkcut.ini](inkcut.ini)  
 ```ini
 # untested 2026/06/11
