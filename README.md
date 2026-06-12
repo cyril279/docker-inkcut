@@ -1,19 +1,23 @@
-# docker-inkcut
-Multistage docker setup that builds inkcut then creates a trimmed-down image (no compiler stuff) to run the inkcut binaries
+# tldr;
+Get inkcut installed to your linux OS by running the `distrobox assemble create` command below:  
+
+```sh
+distrobox assemble create \
+--name inkcutEnv \
+--file https://raw.githubusercontent.com/cyril279/docker-inkcut/refs/heads/main/distrobox.ini
+```
+
+This approach is distribution agnostic, and is ideal for use on immutable OS's.  
+The container image contains inkcut and the python environment that is needed to run it.  
+The distrobox command downloads that container image then makes inkcut conveniently launchable from the OS like any other application.
 
 ### Github container registry address:
 ```
 ghcr.io/cyril279/docker-inkcut:latest
 ```
 
-### distrobox/distroshelf from URL:
-```sh
-distrobox assemble create https://raw.githubusercontent.com/cyril279/docker-inkcut/refs/heads/main/inkcutEnv.ini
-```
-
-[inkcutEnv.ini](inkcutEnv.ini)  
+# [distrobox.ini:](distrobox.ini)  
 ```ini
-# untested 2026/06/11
 [inkcutEnv]
 name=inkcutEnv
 image=ghcr.io/cyril279/docker-inkcut:latest

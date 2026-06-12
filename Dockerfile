@@ -62,9 +62,6 @@ COPY --from=builder /output/usr/share/applications/inkcut.desktop /usr/share/app
 
 RUN cp /usr/lib/python3.*/site-packages/inkcut/res/media/inkcut.svg /usr/share/icons/inkcut.svg
 
-# Ensure the script is executable
-#RUN chmod +x /usr/bin/inkcut
-
 ENV PATH="/usr/bin:$PATH"
 
 CMD ["inkcut"]
