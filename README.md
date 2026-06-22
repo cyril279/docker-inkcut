@@ -1,5 +1,5 @@
 # tldr;
-Install inkcut to your linux OS by running the `distrobox create` (or `distrobox-assemble create`) command below.  
+Install inkcut to your linux OS by running the `distrobox-assemble create` command below.  
 The python environment is already built-out, inkcut is ready-to-run.  
 
 # Overview
@@ -14,26 +14,12 @@ This approach is distribution agnostic, and is ideal for use on immutable OS's.
 ghcr.io/cyril279/docker-inkcut:latest
 ```
 
-## distrobox create
-This one command downloads & integrates the image, then exports the binaries so that inkcut is conveniently launchable from the host OS just like any other application.
-
-```sh
-distrobox create \
-  --name inkcutEnv \
-  --image ghcr.io/cyril279/docker-inkcut:latest \
-  --home "$HOME/.local/share/distrobox/inkcutEnv" \
-  --export-apps "/opt/inkcut-env/share/applications/inkcut.desktop" \
-  --export-binaries "/opt/inkcut-env/bin/inkcut" \
-  --export-binaries-path "$HOME/.local/bin" \
-  --pull \
-  --replace
-```
-
 ## distrobox-assemble create
-The declaritive approach; The paths and flags are stored in a file, and you simply point the distrobox-assemble command to use that stored configuration.
+The paths and flags and apps-to-export are stored in a file;  
+simply point the distrobox-assemble command to use the stored configuration.
 
 ```sh
-distrobox assemble create \
+distrobox-assemble create \
 --name inkcutEnv \
 --file https://raw.githubusercontent.com/cyril279/docker-inkcut/refs/heads/main/distrobox.ini
 ```
