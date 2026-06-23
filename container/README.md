@@ -9,11 +9,6 @@ The python environment is already built-out, inkcut is ready-to-run.
 
 This approach is distribution agnostic, and is ideal for use on immutable OS's.  
 
-### Github container registry address:
-```
-ghcr.io/cyril279/docker-inkcut:latest
-```
-
 ## distrobox-assemble create
 The paths and flags and apps-to-export are stored in a file;  
 simply point the distrobox-assemble command to use the stored configuration.
