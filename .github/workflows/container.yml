@@ -2,12 +2,7 @@ name: Build and Push Inkcut to GHCR
 
 on:
   push:
-    branches: []
-    tags: ["v*.*.*"]
-  pull_request:
-    branches: ["main"]
-  release:
-    types: [published]
+    branches: [testing]
 
 env:
   REGISTRY: ghcr.io
